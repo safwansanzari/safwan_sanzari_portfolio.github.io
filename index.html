@@ -956,7 +956,9 @@
     filter: invert(1) brightness(0.95) sepia(0.4) hue-rotate(340deg) saturate(0.6);
   }
   html[data-theme="dark"] .contact .signature img {
-    filter: invert(1) brightness(0.95) sepia(0.4) hue-rotate(340deg) saturate(0.6);
+    /* In dark mode the contact section bg becomes pale cream (--espresso flips).
+       Drop the invert so the dark signature ink stays visible on the pale bg. */
+    filter: brightness(0.85) saturate(0.7);
   }
   .contact .signature .sig-line { background: rgba(246,240,230,0.25); }
   .contact .signature .sig-name { color: rgba(246,240,230,0.6); }
@@ -1162,6 +1164,88 @@
     .hero-cta { flex-direction: column; }
     .btn { text-align: center; }
     .foot-inner { flex-direction: column; gap: 10px; text-align: center; }
+  }
+
+  /* =========================================================
+     DARK MODE COLOR FIXES
+     Several sections (contact, marquee, exp-feature, footer,
+     committed uni-card, nav) use --espresso as background and
+     hardcoded rgba(246,240,230,X) for text. When --espresso
+     flips to pale cream in dark mode, those text colors become
+     pale-on-pale and disappear. Override them here so dark mode
+     keeps proper contrast.
+     ========================================================= */
+  html[data-theme="dark"] nav {
+    background: rgba(21, 17, 10, 0.88);
+  }
+  html[data-theme="dark"] nav.nav-scrolled {
+    background: rgba(21, 17, 10, 0.97);
+    box-shadow: 0 8px 30px -18px rgba(0,0,0,0.6);
+  }
+  html[data-theme="dark"] .nav-toggle svg { stroke: var(--espresso); }
+
+  /* marquee strip */
+  html[data-theme="dark"] .strip-track span {
+    color: rgba(21, 17, 10, 0.78);
+  }
+
+  /* experience feature card */
+  html[data-theme="dark"] .exp-feature .exp-period {
+    color: rgba(21, 17, 10, 0.62);
+  }
+  html[data-theme="dark"] .exp-feature li {
+    color: rgba(21, 17, 10, 0.84);
+  }
+  html[data-theme="dark"] .exp-feature .ef-img::after {
+    background: linear-gradient(90deg, transparent 55%, rgba(240,230,211,0.45));
+  }
+
+  /* awards rank text on hover (when card flips to espresso/light bg) */
+  html[data-theme="dark"] .award:hover .aw-rank {
+    color: var(--clay);
+  }
+  html[data-theme="dark"] .award:hover .aw-org {
+    color: rgba(21, 17, 10, 0.6);
+  }
+
+  /* contact / "Let's connect" section */
+  html[data-theme="dark"] .contact p {
+    color: rgba(21, 17, 10, 0.78);
+  }
+  html[data-theme="dark"] .c-link {
+    border-color: rgba(21, 17, 10, 0.25);
+  }
+  html[data-theme="dark"] .c-link:hover { border-color: var(--clay); }
+  html[data-theme="dark"] .social-icon {
+    border-color: rgba(21, 17, 10, 0.25);
+  }
+  html[data-theme="dark"] .social-icon:hover { border-color: var(--clay); }
+  html[data-theme="dark"] .social-divider {
+    background: rgba(21, 17, 10, 0.22);
+  }
+  html[data-theme="dark"] .contact .signature .sig-line {
+    background: rgba(21, 17, 10, 0.28);
+  }
+  html[data-theme="dark"] .contact .signature .sig-name {
+    color: rgba(21, 17, 10, 0.65);
+  }
+
+  /* footer */
+  html[data-theme="dark"] footer {
+    color: rgba(240, 230, 211, 0.55);
+    border-top-color: rgba(240, 230, 211, 0.1);
+  }
+
+  /* committed uni-card (UT Austin) — keep as the standout dark card on light page */
+  html[data-theme="dark"] .uni-card.committed .uni-loc {
+    color: rgba(21, 17, 10, 0.6);
+  }
+  html[data-theme="dark"] .uni-card.committed .uni-crest {
+    border-color: rgba(21, 17, 10, 0.3);
+    background: rgba(21, 17, 10, 0.06);
+  }
+  html[data-theme="dark"] .uni-card.committed .uni-crest .ring {
+    stroke: rgba(21, 17, 10, 0.28);
   }
 </style>
 </head>
@@ -1411,8 +1495,8 @@
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <div class="tl-year">October 2025</div>
-        <div class="tl-title">Top 1% — John Locke Global Essay Prize</div>
-        <div class="tl-desc">Very High Commendation in the Politics category — top 1% among 63,328 participants. Visited the John Locke Institute ceremony in Oxford.</div>
+        <div class="tl-title">Top 1% — John Locke Global Essay Prize — $1,250 Scholarship</div>
+        <div class="tl-desc">Very High Commendation in the Politics category — top 1% among 63,328 participants. Awarded $1,250 scholarship for the John Locke Summer Program. Visited the John Locke Institute ceremony in Oxford.</div>
         <span class="tl-tag">John Locke Institute</span>
       </div>
 
@@ -1839,10 +1923,10 @@
       <div class="award-grid reveal from-right">
 
         <div class="award">
-          <div class="aw-rank">Top 1% — Very High Commendation</div>
+          <div class="aw-rank">Top 1% — Very High Commendation — $1,250 Scholarship</div>
           <div class="aw-name">John Locke Essay Competition</div>
           <div class="aw-org">John Locke Institute · Princeton &amp; Oxford</div>
-          <div class="aw-detail">Top 1% of 63,328 participants — Politics category. Oct 2025.</div>
+          <div class="aw-detail">Top 1% of 63,328 participants — Politics category. Awarded $1,250 scholarship for the John Locke Summer Program. Oct 2025.</div>
         </div>
 
         <div class="award">
@@ -1867,10 +1951,10 @@
         </div>
 
         <div class="award">
-          <div class="aw-rank">Shortlisted</div>
+          <div class="aw-rank">High Honors Award — $1,250 Scholarship</div>
           <div class="aw-name">Lumiere Scholars Essay Award</div>
           <div class="aw-org">Lumiere Education · Harvard &amp; Oxford researchers</div>
-          <div class="aw-detail">Shortlisted among essays from over 100 countries. May 2026.</div>
+          <div class="aw-detail">High Honors Award recipient — awarded $1,250 scholarship for the Lumiere Scholars Research Program. May 2026.</div>
         </div>
 
         <div class="award">
